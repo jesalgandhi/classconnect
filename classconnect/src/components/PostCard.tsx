@@ -10,33 +10,26 @@ interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
-  const roleColors = {
-    student: "bg-blue-500",
-    ta: "bg-green-500",
-    professor: "bg-purple-500",
-  };
-
   return (
-    <Card>
+    <Card className="bg-card border border-border shadow-sm">
       <CardHeader>
-        <CardTitle className="flex justify-between items-center">
+        <CardTitle className="flex justify-between items-center text-text">
           <span>{post.author}</span>
           <div className="flex space-x-2">
-            <Badge variant="secondary" className={roleColors[post.role]}>
+            <Badge className="bg-primary text-black">
               {post.role.charAt(0).toUpperCase() + post.role.slice(1)}
             </Badge>
-            <Badge variant="outline">
+            <Badge className="bg-secondary text-black">
               {post.type === "question" ? "❓ Question" : "📚 Resource"}
             </Badge>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground mb-4">{post.content}</p>
+        <p className="text-muted mb-4">{post.content}</p>
         <Button
           onClick={() => onDelete(post.id)}
-          variant="destructive"
-          size="sm"
+          className="bg-accent text-white hover:bg-primary"
         >
           Delete
         </Button>

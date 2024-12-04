@@ -45,22 +45,25 @@ export default function ClassConnect() {
 
   return (
     <div className="container mx-auto p-4 bg-background min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-primary">
-        ClassConnect - CS545 Software Engineering
+      <h1 className="text-3xl font-bold mb-6 text-chocolate_cosmos-500">
+        ClassConnect
       </h1>
-
-      <Card className="mb-6">
+      <Card className="mb-6 bg-card border border-border shadow-sm">
         <CardHeader>
-          <CardTitle>Create a New Post</CardTitle>
+          <CardTitle className="text-text">Create a New Post</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
+              required
+              className="bg-background text-text border-border"
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
               placeholder="Your Name"
             />
             <Textarea
+              required
+              className="bg-background text-text border-border"
               value={newPost}
               onChange={(e) => setNewPost(e.target.value)}
               placeholder="Your question or resource"
@@ -70,10 +73,10 @@ export default function ClassConnect() {
                 value={postType}
                 onValueChange={(value: PostType) => setPostType(value)}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="bg-background text-text border-border">
                   <SelectValue placeholder="Select post type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white text-text border border-border">
                   <SelectItem value="question">Question</SelectItem>
                   <SelectItem value="resource">Resource</SelectItem>
                 </SelectContent>
@@ -82,17 +85,22 @@ export default function ClassConnect() {
                 value={userRole}
                 onValueChange={(value: UserRole) => setUserRole(value)}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="bg-background text-text border-border">
                   <SelectValue placeholder="Select role" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white text-text border border-border">
                   <SelectItem value="student">Student</SelectItem>
                   <SelectItem value="ta">TA</SelectItem>
                   <SelectItem value="professor">Professor</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <Button type="submit">Submit Post</Button>
+            <Button
+              type="submit"
+              className="bg-primary text-black hover:bg-accent"
+            >
+              Submit Post
+            </Button>
           </form>
         </CardContent>
       </Card>
