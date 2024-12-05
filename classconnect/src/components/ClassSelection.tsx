@@ -24,7 +24,8 @@ export default function ClassSelection() {
       professor: "Dr. Alice Johnson",
       assistants: ["John Doe", "Jane Smith"],
       semester: "Fall 2024",
-      description: "An introductory course covering the basics of computer science.",
+      description:
+        "An introductory course covering the basics of computer science.",
     },
     {
       id: 2,
@@ -32,7 +33,8 @@ export default function ClassSelection() {
       professor: "Prof. Richard Roe",
       assistants: ["Emily Davis"],
       semester: "Spring 2025",
-      description: "A course exploring advanced topics in mathematics, including calculus and linear algebra.",
+      description:
+        "A course exploring advanced topics in mathematics, including calculus and linear algebra.",
     },
     {
       id: 3,
@@ -40,7 +42,8 @@ export default function ClassSelection() {
       professor: "Dr. Clara Nguyen",
       assistants: [],
       semester: "Summer 2024",
-      description: "A survey of modern art movements from the late 19th to 20th century.",
+      description:
+        "A survey of modern art movements from the late 19th to 20th century.",
     },
   ]);
 
@@ -110,16 +113,30 @@ export default function ClassSelection() {
 
   return (
     <div className="container mx-auto p-4 bg-background min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-chocolate_cosmos-500">
-        {universityName
-          ? `${universityName} - Class Selection`
-          : "Class Selection"}
-      </h1>
+      <p className="text-4xl font-bold mb-6 text-chocolate_cosmos-500">
+        {universityName}
+      </p>
+      <p className="text-3xl mb-3 font-bold text-chocolate_cosmos-500">
+        Class Selection
+      </p>
+
+      <p className="text-muted mb-3">
+        This page helps you manage class details for the selected university.
+        You can create new classes, search for existing ones, and view or delete
+        classes from the list below.
+      </p>
+
+      {/* Create a New Class Section */}
       <Card className="mb-6 bg-card border border-border shadow-sm">
         <CardHeader>
           <CardTitle className="text-text">Create a New Class</CardTitle>
         </CardHeader>
         <CardContent>
+          <p className="text-muted mb-4">
+            Use this form to add a new class to the university's schedule. You
+            can provide details such as the course title, professor, assistants,
+            semester, and an optional description.
+          </p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               required
@@ -186,11 +203,17 @@ export default function ClassSelection() {
         </CardContent>
       </Card>
 
+      {/* Search Classes Section */}
       <Card className="mb-6 bg-card border border-border shadow-sm">
         <CardHeader>
           <CardTitle className="text-text">Search Classes</CardTitle>
         </CardHeader>
         <CardContent>
+          <p className="text-muted mb-4">
+            Use the fields below to search for classes by their title,
+            professor, or semester. This helps you quickly find specific classes
+            in the system.
+          </p>
           <div className="space-y-4">
             <Input
               className="bg-background text-text border-border"
@@ -214,6 +237,9 @@ export default function ClassSelection() {
         </CardContent>
       </Card>
 
+      <h1 className="text-3xl font-bold mb-3 pt-6 text-chocolate_cosmos-500">
+        All Classes
+      </h1>
       <div className="space-y-4">
         {filteredClasses.map((classItem) => (
           <Card
@@ -225,13 +251,13 @@ export default function ClassSelection() {
                 <Link
                   to={`/university/${universityId}/classes/${classItem.id}`}
                   state={classItem}
-                  className="text-primary hover:underline"
+                  className="text-text text-2xl hover:underline"
                 >
                   {classItem.title}
                 </Link>
                 <Button
                   onClick={() => handleDelete(classItem.id)}
-                  className="bg-accent text-white hover:bg-primary"
+                  className="bg-red-300 text-white hover:bg-red-400"
                 >
                   Delete
                 </Button>

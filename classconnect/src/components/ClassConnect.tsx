@@ -27,10 +27,12 @@ export default function ClassConnect() {
     },
     {
       id: 2,
-      content: "Here is a link to the syllabus: [Syllabus PDF]",
+      content: "Here is the syllabus",
       author: "Dr. Clara Nguyen",
       type: "resource",
       role: "professor",
+      image:
+        "https://img.yumpu.com/37339126/1/500x640/course-syllabus-computer-science-101-west-virginia-university.jpg",
     },
     {
       id: 3,
@@ -45,6 +47,8 @@ export default function ClassConnect() {
       author: "Jane Smith",
       type: "resource",
       role: "ta",
+      image:
+        "https://essinstitute.in/wp-content/uploads/2024/08/recursion-to-solve-python-puzzle-code.jpg",
     },
   ]);
   const [newPost, setNewPost] = useState("");
@@ -54,6 +58,19 @@ export default function ClassConnect() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState<PostType | "all">("all");
   const [filterRole, setFilterRole] = useState<UserRole | "all">("all");
+
+  const [image, setImage] = useState<string | undefined>(undefined);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const location = useLocation();
   const classInfo = location.state as {
@@ -76,9 +93,11 @@ export default function ClassConnect() {
           author,
           type: postType,
           role: userRole,
+          image, // Add the image to the post
         },
       ]);
       setNewPost("");
+      setImage(undefined); // Reset image after submission
     }
   };
 
@@ -97,25 +116,11 @@ export default function ClassConnect() {
 
   return (
     <div className="container mx-auto p-4 bg-background min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-chocolate_cosmos-500">
-        {classInfo.title} - Class Connect
+      <h1 className="text-3xl font-bold mb-3 text-chocolate_cosmos-500">
+        Post Management
       </h1>
-      <div className="mb-4">
-        <p>
-          <strong>Professor:</strong> {classInfo.professor}
-        </p>
-        <p>
-          <strong>Assistants:</strong>{" "}
-          {classInfo.assistants.length > 0 ? classInfo.assistants.join(", ") : "None"}
-        </p>
-        <p>
-          <strong>Semester:</strong> {classInfo.semester}
-        </p>
-        <p>
-          <strong>Description:</strong> {classInfo.description}
-        </p>
-      </div>
 
+      {/* New Post Form */}
       <Card className="mb-6 bg-card border border-border shadow-sm">
         <CardHeader>
           <CardTitle className="text-text">Create a New Post</CardTitle>
@@ -163,6 +168,26 @@ export default function ClassConnect() {
                 </SelectContent>
               </Select>
             </div>
+            <div className="flex flex-col space-y-2 pb-4">
+              <label className="text-sm text-muted">
+                Upload an optional image to include in your post:
+              </label>
+              <div className="relative inline-block">
+                <label
+                  htmlFor="image-upload"
+                  className="bg-orange-200 text-black px-2 py-1 rounded cursor-pointer hover:bg-orange-300 transition-colors"
+                >
+                  Upload Image
+                </label>
+                <Input
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+              </div>
+            </div>
             <Button
               type="submit"
               className="bg-primary text-black hover:bg-accent"
@@ -173,45 +198,17 @@ export default function ClassConnect() {
         </CardContent>
       </Card>
 
-      <div className="mb-4 flex space-x-4">
-        <Input
-          className="bg-background text-text border-border w-full"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search posts"
-        />
-        <Select
-          value={filterType}
-          onValueChange={(value: PostType | "all") => setFilterType(value)}
-        >
-          <SelectTrigger className="bg-background text-text border-border">
-            <SelectValue placeholder="Filter by type" />
-          </SelectTrigger>
-          <SelectContent className="bg-white text-text border border-border">
-            <SelectItem value="all">All Types</SelectItem>
-            <SelectItem value="question">Question</SelectItem>
-            <SelectItem value="resource">Resource</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select
-          value={filterRole}
-          onValueChange={(value: UserRole | "all") => setFilterRole(value)}
-        >
-          <SelectTrigger className="bg-background text-text border-border">
-            <SelectValue placeholder="Filter by role" />
-          </SelectTrigger>
-          <SelectContent className="bg-white text-text border border-border">
-            <SelectItem value="all">All Roles</SelectItem>
-            <SelectItem value="student">Student</SelectItem>
-            <SelectItem value="ta">TA</SelectItem>
-            <SelectItem value="professor">Professor</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
+      <h1 className="text-3xl font-bold mb-3 text-chocolate_cosmos-500">
+        All Posts
+      </h1>
+      {/* Display Posts */}
       <div className="space-y-4">
-        {filteredPosts.map((post) => (
-          <PostCard key={post.id} post={post} onDelete={handleDelete} />
+        {posts.map((post) => (
+          <PostCard
+            key={post.id}
+            post={post}
+            onDelete={(id) => setPosts(posts.filter((p) => p.id !== id))}
+          />
         ))}
       </div>
     </div>

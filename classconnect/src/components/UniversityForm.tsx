@@ -104,12 +104,9 @@ export default function UniversityForm() {
       university.name.toLowerCase().includes(searchName.toLowerCase());
     const matchesLocation =
       searchLocation === "" ||
-      university.location
-        .toLowerCase()
-        .includes(searchLocation.toLowerCase());
+      university.location.toLowerCase().includes(searchLocation.toLowerCase());
     const matchesYear =
-      searchYear === "" ||
-      university.establishedYear === Number(searchYear);
+      searchYear === "" || university.establishedYear === Number(searchYear);
     const matchesProgram =
       filterProgram === "" || university.programs.includes(filterProgram);
 
@@ -118,9 +115,15 @@ export default function UniversityForm() {
 
   return (
     <div className="container mx-auto p-4 bg-background min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-chocolate_cosmos-500">
+      <h1 className="text-3xl font-bold mb-3 text-chocolate_cosmos-500">
         University Management
       </h1>
+      <p className="text-muted mb-4">
+        This section allows you to manage university data. You can add new
+        universities, specify details like name, location, year of
+        establishment, and programs offered. Use the form below to input
+        university details.
+      </p>
 
       {/* Form Section */}
       <Card className="mb-6 bg-card border border-border shadow-sm">
@@ -194,43 +197,15 @@ export default function UniversityForm() {
           </form>
         </CardContent>
       </Card>
-      {/* Search and Filter Section */}
-      <Card className="mb-6 bg-card border border-border shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-text">Search Universities</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-6 space-y-4">
-            <Input
-              className="bg-background text-text border-border"
-              value={searchName}
-              onChange={(e) => setSearchName(e.target.value)}
-              placeholder="Search by name"
-            />
-            <Input
-              className="bg-background text-text border-border"
-              value={searchLocation}
-              onChange={(e) => setSearchLocation(e.target.value)}
-              placeholder="Search by location"
-            />
-            <Input
-              type="number"
-              className="bg-background text-text border-border"
-              value={searchYear}
-              onChange={(e) =>
-                setSearchYear(e.target.value === "" ? "" : parseInt(e.target.value, 10))
-              }
-              placeholder="Search by year"
-            />
-            <Input
-              className="bg-background text-text border-border"
-              value={filterProgram}
-              onChange={(e) => setFilterProgram(e.target.value)}
-              placeholder="Filter by program (optional)"
-            />
-          </div>
-        </CardContent>
-      </Card>
+
+      <h1 className="text-3xl font-bold mb-3 pt-6 text-chocolate_cosmos-500">
+        All Universities
+      </h1>
+      <p className="text-muted mb-4">
+        This section lists all the universities currently in the system. You can
+        browse through the list, view detailed information about each
+        university, or delete any university from the list.
+      </p>
 
       {/* Filtered Universities */}
       <div className="space-y-4">
@@ -240,12 +215,12 @@ export default function UniversityForm() {
             className="bg-card border border-border shadow-sm"
           >
             <CardHeader>
-              <CardTitle className="text-text flex justify-between items-center">
+              <CardTitle className="text-text text-2xl flex justify-between items-center">
                 <Link
-                  to={`/university/${university.id}/classes?name=${encodeURIComponent(
-                    university.name
-                  )}`}
-                  className="text-primary hover:underline"
+                  to={`/university/${
+                    university.id
+                  }/classes?name=${encodeURIComponent(university.name)}`}
+                  className="text-text hover:underline"
                 >
                   {university.name}
                 </Link>

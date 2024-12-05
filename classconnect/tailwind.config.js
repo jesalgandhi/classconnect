@@ -26,6 +26,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [fontFamily.sans],
+        bungee: ['"Bungee Shade"', "cursive"],
       },
       colors: {
         background: "#F0F8FF",

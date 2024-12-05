@@ -7,4 +7,5 @@ export interface Post {
   author: string;
   type: PostType;
   role: UserRole;
+  image?: string;
 }
